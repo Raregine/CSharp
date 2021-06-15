@@ -1,0 +1,29 @@
+int ThermistorPin = 0;
+int Vo;
+float R1 = 1000;
+float logR2, R2, T;
+float c3 = -5.2796e-08, c2 = 2.7974e-04, c1 = 8.1875e-04;
+
+
+
+void setup() {
+Serial.begin(9600);
+}
+
+
+void loop() {
+  
+
+  Vo = analogRead(ThermistorPin);
+  R2 = R1 * (1023.0 / (float)Vo - 1.0);
+  logR2 = log(R2);
+  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));
+  T = T - 273.15;
+
+  //Serial.print("Temperature: "); 
+  Serial.println(T);
+  //Serial.println(" C"); 
+
+  delay(1000);
+
+}
